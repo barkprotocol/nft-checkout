@@ -2,7 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom global styles */
 @layer base {
+  /* Root styles for light mode */
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
@@ -31,6 +33,7 @@
     --chart-5: 27 87% 67%;
   }
 
+  /* Dark mode styles */
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
@@ -58,15 +61,43 @@
     --chart-5: 340 75% 55%;
   }
 
+  /* Apply base styles to body */
   body {
     @apply bg-background text-foreground;
   }
 }
 
+/* Custom utility classes */
 .donation-list {
   @apply flex flex-col gap-4;
 }
 
 .donation-card {
   @apply p-4 border border-gray-200 rounded-md shadow-md bg-white;
+}
+
+.card {
+  @apply p-4 border border-gray-200 rounded-md shadow-md;
+}
+
+/* Dashboard specific styles */
+.dashboard-metric-card {
+  @apply p-4 bg-white border rounded-md shadow-md;
+}
+
+.dashboard-activity-item {
+  @apply p-4 bg-gray-50 rounded-md shadow-sm;
+}
+
+/* Utility classes for spacing and font sizes */
+.spacing-xl {
+  @apply mb-8;
+}
+
+.font-lg {
+  @apply text-lg;
+}
+
+.font-xl {
+  @apply text-xl;
 }

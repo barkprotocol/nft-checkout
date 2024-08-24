@@ -1,10 +1,17 @@
 import { NextResponse } from "next/server";
 import prisma from "../../../../prisma";  // Import Prisma client
 
+interface DonationRequestBody {
+    address: string;
+    donationDate: string;  // ISO 8601 date string
+    totalParticipants: number;
+    bountyAmount: number;
+}
+
 export const POST = async (req: Request) => {
     try {
         // Parse and validate request body
-        const { address, donationDate, totalParticipants, bountyAmount } = await req.json();
+        const { address, donationDate, totalParticipants, bountyAmount }: DonationRequestBody = await req.json();
 
         // Validate required fields
         if (!address || !donationDate || !totalParticipants || !bountyAmount) {
@@ -18,6 +25,18 @@ export const POST = async (req: Request) => {
         if (isNaN(parsedDate.getTime())) {
             return NextResponse.json({
                 message: "Invalid Data: Donation date is invalid.",
+            }, { status: 422 });
+        }
+
+        // Validate totalParticipants and bountyAmount are numbers and greater than 0
+        if (typeof totalParticipants !== 'number' || totalParticipants <= 0) {
+            return NextResponse.json({
+                message: "Invalid Data: Total participants must be a positive number.",
+            }, { status: 422 });
+        }
+        if (typeof bountyAmount !== 'number' || bountyAmount <= 0) {
+            return NextResponse.json({
+                message: "Invalid Data: Bounty amount must be a positive number.",
             }, { status: 422 });
         }
 

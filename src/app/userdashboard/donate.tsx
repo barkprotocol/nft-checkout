@@ -21,10 +21,10 @@ const Donate: React.FC = () => {
   const [success, setSuccess] = useState<string | null>(null);
 
   const handleDonationChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
+    const { name, value, type } = e.target;
     setDonation((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: type === 'number' ? Number(value) : value,
     }));
   };
 
@@ -49,6 +49,7 @@ const Donate: React.FC = () => {
     }
 
     try {
+      // Replace with your API endpoint
       const response = await fetch('/api/donate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -61,6 +62,7 @@ const Donate: React.FC = () => {
 
       const result = await response.json();
       setSuccess('Donation submitted successfully!');
+      
       // Reset form fields
       setDonation({
         address: '',
@@ -88,7 +90,6 @@ const Donate: React.FC = () => {
       {/* Donation Form Card */}
       <Card title="Make a Donation" className="mb-8">
         <form onSubmit={handleSubmit} className='space-y-4'>
-          {/* Address Input */}
           <div>
             <label className='block text-sm font-medium text-gray-700'>Address</label>
             <input
@@ -100,8 +101,6 @@ const Donate: React.FC = () => {
               required
             />
           </div>
-
-          {/* Donation Date Input */}
           <div>
             <label className='block text-sm font-medium text-gray-700'>Donation Date</label>
             <input
@@ -113,8 +112,6 @@ const Donate: React.FC = () => {
               required
             />
           </div>
-
-          {/* Total Participants Input */}
           <div>
             <label className='block text-sm font-medium text-gray-700'>Total Participants</label>
             <input
@@ -127,8 +124,6 @@ const Donate: React.FC = () => {
               min="1"
             />
           </div>
-
-          {/* Bounty Amount Input */}
           <div>
             <label className='block text-sm font-medium text-gray-700'>Bounty Amount</label>
             <input
@@ -141,8 +136,6 @@ const Donate: React.FC = () => {
               min="0"
             />
           </div>
-
-          {/* Participant Name Input */}
           <div>
             <label className='block text-sm font-medium text-gray-700'>Participant Name</label>
             <input
@@ -154,8 +147,6 @@ const Donate: React.FC = () => {
               required
             />
           </div>
-
-          {/* Submit Button */}
           <button
             type="submit"
             className='inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
@@ -163,8 +154,6 @@ const Donate: React.FC = () => {
           >
             {loading ? 'Submitting...' : 'Submit Donation'}
           </button>
-
-          {/* Error and Success Messages */}
           {error && <p className='text-red-600 mt-4'>{error}</p>}
           {success && <p className='text-green-600 mt-4'>{success}</p>}
         </form>

@@ -25,15 +25,20 @@ const UserForm: React.FC = () => {
   // Handle input change
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormValues({ ...formValues, [name]: value });
+    setFormValues(prevValues => ({ ...prevValues, [name]: value }));
   };
 
   // Validate form inputs
   const validate = (): boolean => {
     const newErrors: FormErrors = {};
-    if (!formValues.name) newErrors.name = 'Name is required';
-    if (!formValues.email) newErrors.email = 'Email is required';
-    if (!formValues.age || isNaN(Number(formValues.age))) newErrors.age = 'Age must be a number';
+    const { name, email, age } = formValues;
+
+    if (!name) newErrors.name = 'Name is required';
+    if (!email) newErrors.email = 'Email is required';
+    else if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = 'Email is invalid';
+    if (!age) newErrors.age = 'Age is required';
+    else if (isNaN(Number(age))) newErrors.age = 'Age must be a number';
+    else if (Number(age) <= 0) newErrors.age = 'Age must be a positive number';
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;

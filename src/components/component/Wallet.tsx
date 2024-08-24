@@ -20,7 +20,7 @@ type Props = {
 
 export const Wallet: FC<Props> = ({ children }) => {
   // Define your RPC endpoint
-  const endpoint = 'https://api.testnet.solana.com'; // Change this to mainnet endpoint for production
+  const endpoint = process.env.NEXT_PUBLIC_SOLANA_ENDPOINT || 'https://api.testnet.solana.com'; // Use environment variable
 
   // Define the list of wallets
   const wallets = useMemo(

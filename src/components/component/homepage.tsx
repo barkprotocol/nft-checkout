@@ -57,25 +57,24 @@ export function HomePage() {
                     Only authorized persons can access this.
                   </DialogDescription>
                 </DialogHeader>
-                <div className="flex items-center space-x-2">
-                  <div className="grid flex-1 gap-2">
-                    <Label htmlFor="health-code" className="sr-only">
-                      Health Code
-                    </Label>
-                    <Input
-                      id="health-code"
-                      value={healthCode}
-                      onChange={(e) => setHealthCode(e.target.value)}
-                      placeholder="Enter health code"
-                      aria-labelledby="health-code"
-                    />
-                  </div>
+                <div className="space-y-4">
+                  <Label htmlFor="health-code" className="block text-left">
+                    Health Code
+                  </Label>
+                  <Input
+                    id="health-code"
+                    value={healthCode}
+                    onChange={(e) => setHealthCode(e.target.value)}
+                    placeholder="Enter health code"
+                    aria-labelledby="health-code"
+                    className="w-full"
+                  />
                 </div>
-                <DialogFooter className="sm:justify-start">
+                <DialogFooter className="sm:justify-start mt-4">
                   <DialogClose asChild>
                     <Button
                       variant="secondary"
-                      className="w-full bg-red-600 text-white hover:text-red-600 hover:border-red-600 border-2"
+                      className="w-full bg-red-600 text-white hover:bg-red-700 border-2 border-red-600"
                       onClick={handleDialogClose}
                     >
                       Proceed
